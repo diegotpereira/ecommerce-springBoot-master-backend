@@ -1,6 +1,6 @@
 package br.com.java.enums;
 
-public class Role {
+public enum Role {
     user,
     manager,
     admin

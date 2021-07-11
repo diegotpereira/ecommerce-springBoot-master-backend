@@ -9,7 +9,7 @@ import br.com.java.model.UserProfile;
 import br.com.java.repository.UserProfileRepository;
 
 @Service
-public class UserService {
+public class UserProfileService {
     @Autowired
     private UserProfileRepository userRepo;
 

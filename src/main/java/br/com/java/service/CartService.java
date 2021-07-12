@@ -66,11 +66,10 @@ public class CartService {
     }
 
     public void deleteCartItem(int id, int userId) throws CartItemNotExistException {
-        if (!repository.existsById(id)) {
+        if (!repository.existsById(id)) 
             throw new CartItemNotExistException("Id do carrinho inválido : " + id);
 
             repository.deleteById(id);
-        }
     }
 
     public void deleteCartItem(int userId) {

@@ -38,8 +38,8 @@ public class OrderService {
     @Autowired
     OrderItemsService orderItemsService;
 
-    @Value("${BASE_URL}")
-    private String baseURL;
+//    @Value("${BASE_URL}")
+    private String baseUrl;
 
     @Value("${STRIPE_SECRET_KEY}")
     private String apiKey;
@@ -70,7 +70,7 @@ public class OrderService {
             return order.get();
         }
 
-        throw new OrderNotFoundException("Perdido não encontrado");
+        throw new OrderNotFoundException("Pedido não encontrado");
     }
 
     public void placeOrder(User user, String sessionId) {
@@ -113,8 +113,8 @@ public class OrderService {
 
     public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
 
-        String successURL = baseURL + "payment/success";
-        String failedURL = baseURL + "payment/failed";
+        String successURL = baseUrl + "payment/success";
+        String failedURL = baseUrl + "payment/failed";
 
         Stripe.apiKey = apiKey;
 

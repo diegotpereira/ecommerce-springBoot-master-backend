@@ -14,7 +14,7 @@ public class Cart {
     private Integer id;
 
     @Column(name = "created_Date")
-    private Date creaDate;
+    private Date createdDate;
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -26,9 +26,6 @@ public class Cart {
     private User user;
 
     private int quantity;
-
-    @Column(name = "created_date")
-    private Date createdDate;
 
     public Cart() {
     }
@@ -46,14 +43,6 @@ public class Cart {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Date getCreaDate() {
-        return creaDate;
-    }
-
-    public void setCreaDate(Date creaDate) {
-        this.creaDate = creaDate;
     }
 
     public Product getProduct() {

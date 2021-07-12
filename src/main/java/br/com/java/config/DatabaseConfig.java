@@ -3,30 +3,39 @@ package br.com.java.config;
 
 import javax.sql.DataSource;
 
-import com.zaxxer.hikari.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.core.env.Environment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 
 @Configuration
+//@EnableTransactionManagement
 public class DatabaseConfig {
-	
-	  @Autowired
-	  private Environment env;
 
-	  @Autowired
-	  private DataSource dataSource;
 	
-	 @Bean
+	@Value("${spring.datasource.url}")
+	private String DB_URL;
+	
+	@Value("${spring.datasource.username}")
+	private String DB_USERNAME;
+	
+	@Value("${spring.datasource.password}")
+	private String DB_PASSWORD;
+	
+	@Value("${spring.datasource.driverClassName}")
+	private String DB_DRIVER;
+	
+	
+	
+	@Bean
 	  public DataSource dataSource() {
 	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	    dataSource.setDriverClassName(env.getProperty("db.driver"));
-	    dataSource.setUrl(env.getProperty("db.url"));
-	    dataSource.setUsername(env.getProperty("db.username"));
-	    dataSource.setPassword(env.getProperty("db.password"));
+	    dataSource.setDriverClassName(DB_DRIVER);
+	    dataSource.setUrl(DB_URL);
+	    dataSource.setUsername(DB_USERNAME);
+	    dataSource.setPassword(DB_PASSWORD);
 	    return dataSource;
 	  }
 }

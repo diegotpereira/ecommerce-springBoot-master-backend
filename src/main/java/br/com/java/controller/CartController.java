@@ -54,7 +54,7 @@ public class CartController {
         return new ResponseEntity<CartDto>(cartDto, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{cartItemId}")
+    @PutMapping("/update/{cartItemId}")
     public ResponseEntity<ApiResponse> updateCartItem(@RequestBody @Valid AddToCartDto cartDto, @RequestParam("token") String token) throws AuthenticationFailException, ProductNotExistException {
         authenticationService.authenticate(token);
         User user = authenticationService.getUser(token);

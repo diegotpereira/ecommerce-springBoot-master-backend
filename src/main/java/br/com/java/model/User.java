@@ -37,15 +37,12 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String firstname, String lastname, String email, Role role, String password,
-            List<Order> orders) {
-        this.id = id;
+    public User(String firstname, String lastname, String email, Role role, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
         this.password = password;
-        this.orders = orders;
     }
 
     public Integer getId() {

@@ -11,12 +11,12 @@ public class CartDto {
         this.totalCost = totalCost;
     }
 
-    public List<CartItemDto> getCartItems() {
+    public List<CartItemDto> getcartItems() {
         return cartItems;
     }
 
-    public void setCartItems(List<CartItemDto> cartItems) {
-        this.cartItems = cartItems;
+    public void setCartItems(List<CartItemDto> cartItemDtoList) {
+        this.cartItems = cartItemDtoList;
     }
 
     public double getTotalCost() {

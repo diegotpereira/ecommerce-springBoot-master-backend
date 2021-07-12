@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.java.dto.order.PlaceOrderDto;
+
 import java.util.Date;
 import java.util.List;
 
@@ -33,13 +35,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer id, Date createdDate, Double totalPrice, String sesseionId, List<OrderItem> orderItems,
-            User user) {
-        this.id = id;
-        this.createdDate = createdDate;
-        this.totalPrice = totalPrice;
-        this.sesseionId = sesseionId;
-        this.orderItems = orderItems;
+    public Order(PlaceOrderDto placeOrderDto,  User user, String sessionId) {
+        this.createdDate = new Date();
+        this.totalPrice = placeOrderDto.getTotalPrice();
+        this.sesseionId = sessionId;
         this.user = user;
     }
 

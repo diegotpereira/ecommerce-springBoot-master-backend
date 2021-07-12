@@ -2,8 +2,14 @@ package br.com.java.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
 
 import javax.transaction.Transactional;
+
+import com.stripe.param.checkout.SessionCreateParams;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +19,7 @@ import br.com.java.dto.cart.CartDto;
 import br.com.java.dto.cart.CartItemDto;
 import br.com.java.dto.checkout.CheckoutItemDto;
 import br.com.java.dto.order.PlaceOrderDto;
+import br.com.java.exception.OrderNotFoundException;
 import br.com.java.model.Order;
 import br.com.java.model.OrderItem;
 import br.com.java.model.User;
@@ -50,7 +57,7 @@ public class OrderService {
     }
 
     public List<Order> listOrders(User user){
-        List<Order> orderList = orderRepository.finAllByUserOrderByCreateDateDesc(user);
+        List<Order> orderList = orderRepository.findAllByUserOrderByCreatedDateDesc(user);
 
         return orderList;
     }
@@ -66,7 +73,7 @@ public class OrderService {
         throw new OrderNotFoundException("Perdido não encontrado");
     }
 
-    public void placeOrder(User user, String sessionId){
+    public void placeOrder(User user, String sessionId) {
         CartDto cartDto = cartService.listCartItems(user);
 
         PlaceOrderDto placeOrderDto = new PlaceOrderDto();
@@ -74,38 +81,37 @@ public class OrderService {
         placeOrderDto.setTotalPrice(cartDto.getTotalCost());
 
         Order newOrder = saveOrder(placeOrderDto, user, sessionId);
-        List<CartItemDto> cartItemDtoList = cartDto.getCartItems();
-
-        for(CartItemDto cartItemDto : cartItemDtoList) {
+        List<CartItemDto> cartItemDtoList = cartDto.getcartItems();
+        for (CartItemDto cartItemDto : cartItemDtoList) {
             OrderItem orderItem = new OrderItem(
-                newOrder,
-                cartItemDto.getProduct(),
-                cartItemDto.getQuantity(),
-                cartItemDto.getProduct().getPrice());
-
-                orderItemsService.addOrderedProducts(orderItem);
+                    newOrder,
+                    cartItemDto.getProduct(),
+                    cartItemDto.getQuantity(),
+                    cartItemDto.getProduct().getPrice());
+            orderItemsService.addOrderedProducts(orderItem);
         }
         cartService.deleteUserCartItems(user);
     }
 
     SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemDto checkoutItemDto) {
-        return SessionCreateParams.LineItem.Price.builder()
-                 .setCurrency("usd")
-                 .setUnitAmount( ((long) checkoutItemDto.getPrice()) * 100)
-                 .setProductData(
-                     SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                     .setName(checkoutItemDto.getProductName())
-                     .build());
+        return SessionCreateParams.LineItem.PriceData.builder()
+                .setCurrency("usd")
+                .setUnitAmount( ((long) checkoutItemDto.getPrice()) * 100)
+                .setProductData(
+                        SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                                .setName(checkoutItemDto.getProductName())
+                                .build())
+                .build();
     }
 
-    SessionCreateParams.LineItem.createSessionLineItem(CheckoutItemDto checkoutItemDto) {
+    SessionCreateParams.LineItem createSessionLineItem(CheckoutItemDto checkoutItemDto) {
         return SessionCreateParams.LineItem.builder()
-                  .setPriceData(createPriceData(checkoutItemDto))
-                  .setQuantity(Long.parseLong(String.valueOf(checkoutItemDto.getQuantity())))
-                  .build();
+                .setPriceData(createPriceData(checkoutItemDto))
+                .setQuantity(Long.parseLong(String.valueOf(checkoutItemDto.getQuantity())))
+                .build();
     }
 
-    public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) {
+    public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
 
         String successURL = baseURL + "payment/success";
         String failedURL = baseURL + "payment/failed";
@@ -114,6 +120,18 @@ public class OrderService {
 
         List<SessionCreateParams.LineItem> sessionItemsList = new ArrayList<SessionCreateParams.LineItem>();
 
-        for
+        for(CheckoutItemDto checkoutItemDto : checkoutItemDtoList) {
+            sessionItemsList.add(createSessionLineItem(checkoutItemDto));
+        }
+
+        SessionCreateParams params = SessionCreateParams.builder()
+                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+                .setMode(SessionCreateParams.Mode.PAYMENT)
+                .setCancelUrl(failedURL)
+                .addAllLineItem(sessionItemsList)
+                .setSuccessUrl(successURL)
+                .build();
+
+                return Session.create(params);
     }
 }

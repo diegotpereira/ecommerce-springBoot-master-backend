@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "orderitens")
+@Table(name = "orderitem    s")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,10 @@ public class OrderItem {
     public OrderItem() {
     }
 
-    public OrderItem(Integer id, @NotNull int quantity, @NotNull double price, Date createdDate, Order order,
-            Product product) {
-        this.id = id;
+    public OrderItem(Order order, @NotNull Product product, @NotNull int quantity, @NotNull double price) {
         this.quantity = quantity;
         this.price = price;
-        this.createdDate = createdDate;
+        this.createdDate = new Date();
         this.order = order;
         this.product = product;
     }

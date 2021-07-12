@@ -2,6 +2,8 @@ package br.com.java.dto.product;
 
 import javax.validation.constraints.NotNull;
 
+import br.com.java.model.Product;
+
 public class ProductDto {
     
     private Integer id;
@@ -27,6 +29,15 @@ public class ProductDto {
         this.price = price;
         this.description = description;
         this.categoryId = categoryId;
+    }
+
+    public ProductDto(Product product) {
+        this.setId(product.getId());
+        this.setName(product.getName());
+        this.setImageURL(product.getImageURL());
+        this.setDescription(product.getDescription());
+        this.setPrice(product.getPrice());
+        this.setCategoryId(product.getCategory().getId());
     }
 
     public Integer getId() {

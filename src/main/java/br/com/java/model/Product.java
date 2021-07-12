@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.java.dto.product.ProductDto;
+
 @Entity
 @Table(name = "products")
 public class Product {
@@ -35,16 +37,20 @@ public class Product {
     public Product() {
     }
 
-    public Product(Integer id, @NotNull String name, @NotNull String imageURL, @NotNull double price,
-            @NotNull String description, Category category, List<WishList> wishListList, List<Cart> carts) {
-        this.id = id;
+    public Product(String name, String imageURL, double price, String description, Category category) {
         this.name = name;
         this.imageURL = imageURL;
         this.price = price;
         this.description = description;
         this.category = category;
-        this.wishListList = wishListList;
-        this.carts = carts;
+    }
+
+    public Product(ProductDto productDto, Category category) {
+        this.name = productDto.getName();
+        this.imageURL = productDto.getImageURL();
+        this.description = productDto.getDescription();
+        this.price = productDto.getPrice();
+        this.category = category;
     }
 
     public Integer getId() {

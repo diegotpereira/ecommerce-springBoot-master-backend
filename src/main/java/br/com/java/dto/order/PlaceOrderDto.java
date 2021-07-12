@@ -2,6 +2,7 @@ package br.com.java.dto.order;
 
 import javax.validation.constraints.NotNull;
 
+import br.com.java.model.Order;
 import br.com.java.model.User;
 
 public class PlaceOrderDto {
@@ -15,10 +16,10 @@ public class PlaceOrderDto {
     public PlaceOrderDto() {
     }
 
-    public PlaceOrderDto(Integer id, User user, @NotNull Double totalPrice) {
-        this.id = id;
-        this.user = user;
-        this.totalPrice = totalPrice;
+    public PlaceOrderDto(Order order) {
+        this.setId(order.getId());
+        this.setUser(order.getUser());
+        this.setTotalPrice(order.getTotalPrice());
     }
 
     public Integer getId() {

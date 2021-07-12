@@ -55,6 +55,18 @@ public class FIleStoreService {
         }
     }
 
+    public Stream<Path> loadAll() {
+        try {
+            return Files.walk(this.rootLocation, 1)
+                    .filter(path -> !path.equals(this.rootLocation))
+                    .map(this.rootLocation::relativize);
+        }
+        catch (IOException e) {
+            throw new StorageException("Falha ao ler os arquivos armazenados", e);
+        }
+
+    }
+
     public Resource load(String filename) {
         try {
             Path file = rootLocation.resolve(filename);

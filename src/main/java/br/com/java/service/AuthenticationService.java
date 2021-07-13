@@ -15,7 +15,7 @@ public class AuthenticationService {
     
 
     @Autowired
-    private TokenRepository repository;
+    TokenRepository repository;
 
     public void saveConfirmationToken(AuthenticationToken authenticationToken) {
         repository.save(authenticationToken);

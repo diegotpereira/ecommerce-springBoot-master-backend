@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "WishList")
+@Table(name = "wishlist")
 public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

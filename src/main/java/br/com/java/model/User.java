@@ -23,11 +23,11 @@ public class User {
     private String lastName;
 
     @Column(name = "email")
-    public String email;
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    public Role role;
+    private Role role;
 
     @Column(name = "password")
     private String password;

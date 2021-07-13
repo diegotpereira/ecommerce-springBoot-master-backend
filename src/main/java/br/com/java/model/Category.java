@@ -8,7 +8,9 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Table(name = "categories")
 public class Category {
-    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "category_name")
@@ -24,14 +26,16 @@ public class Category {
 
     public Category() {
     }
+    
+    public Category(@NotBlank String categoryName, @NotBlank String description) {
+    	this.categoryName = categoryName;
+    	this.description = description;
+    }
 
-    public Category(Integer id, @NotBlank String categoryName, @NotBlank String description, @NotBlank String imageUrl,
-            Set<Product> products) {
-        this.id = id;
+    public Category(@NotBlank String categoryName, @NotBlank String description, @NotBlank String imageUrl) {
         this.categoryName = categoryName;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.products = products;
     }
 
     public Integer getId() {
@@ -43,7 +47,7 @@ public class Category {
     }
 
     public String getCategoryName() {
-        return categoryName;
+        return this.categoryName;
     }
 
     public void setCategoryName(String categoryName) {
@@ -76,9 +80,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category [categoryName=" + categoryName + ", description=" + description + ", id=" + id + ", imageUrl="
-                + imageUrl + ", products=" + products + "]";
-    }
-
-    
+        return "User {category id=" + id + ", category name='" + categoryName + "', description='" + description + "'}";
+    }    
 }

@@ -24,7 +24,7 @@ import br.com.java.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
     
     @Autowired

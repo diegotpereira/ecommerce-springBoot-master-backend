@@ -33,9 +33,9 @@ public class AuthenticationToken {
 
 
 
-    public AuthenticationToken(Integer id, String token, Date createdDate, User user) {
+    public AuthenticationToken(Integer id, String Token, Date createdDate, User user) {
         this.id = id;
-        this.token = token;
+        this.token = Token;
         this.createdDate = createdDate;
         this.user = user;
     }
@@ -52,8 +52,8 @@ public class AuthenticationToken {
         return token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setToken(String Token) {
+        this.token = Token;
     }
 
     public Date getCreatedDate() {

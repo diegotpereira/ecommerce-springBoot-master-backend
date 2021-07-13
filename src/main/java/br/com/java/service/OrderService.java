@@ -38,8 +38,8 @@ public class OrderService {
     @Autowired
     OrderItemsService orderItemsService;
 
-//    @Value("${BASE_URL}")
-    private String baseUrl;
+    @Value("${baseURL}")
+    private String baseURL;
 
     @Value("${STRIPE_SECRET_KEY}")
     private String apiKey;
@@ -113,8 +113,8 @@ public class OrderService {
 
     public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
 
-        String successURL = baseUrl + "payment/success";
-        String failedURL = baseUrl + "payment/failed";
+        String successURL = baseURL + "payment/success";
+        String failedURL = baseURL + "payment/failed";
 
         Stripe.apiKey = apiKey;
 

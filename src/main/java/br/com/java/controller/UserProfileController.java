@@ -29,6 +29,6 @@ public class UserProfileController {
     @PostMapping("/add")
 	public ResponseEntity<ApiResponse> addSurvey(@RequestBody @Valid UserProfile profile) {
 		userProfileService.addProfile(profile);
-		return new ResponseEntity<>(new ApiResponse(true, "Profile has been created."), HttpStatus.CREATED);
+		return new ResponseEntity<>(new ApiResponse(true, "O Perfil foi criado."), HttpStatus.CREATED);
 	}
 }

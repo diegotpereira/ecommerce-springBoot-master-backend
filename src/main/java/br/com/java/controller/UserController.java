@@ -15,6 +15,7 @@ import br.com.java.dto.ResponseDto;
 import br.com.java.dto.user.SignInDto;
 import br.com.java.dto.user.SignInResponseDto;
 import br.com.java.dto.user.SignupDto;
+import br.com.java.exception.AuthenticationFailException;
 import br.com.java.exception.CustomException;
 import br.com.java.model.User;
 import br.com.java.repository.UserRepository;
@@ -36,7 +37,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/all")
-    public List<User> findAllUser(@RequestParam("token") String token) throws CustomException {
+    public List<User> findAllUser(@RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
 
         return userRepository.findAll();

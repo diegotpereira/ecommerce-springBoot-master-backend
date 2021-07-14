@@ -38,6 +38,7 @@ public class Product {
     }
 
     public Product(String name, String imageURL, double price, String description, Category category) {
+    	super();
         this.name = name;
         this.imageURL = imageURL;
         this.price = price;
@@ -115,5 +116,16 @@ public class Product {
 
     public void setCarts(List<Cart> carts) {
         this.carts = carts;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

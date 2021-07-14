@@ -15,10 +15,10 @@ public class WishList {
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    @Column(name = "created_Date")
+    @Column(name = "created_date")
     private Date createdDate;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
 
